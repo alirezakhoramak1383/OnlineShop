@@ -2,6 +2,7 @@
 
 namespace OnlineShop.Domin.Entities.Products
 {
+    
     public class Product
     {
         public long Id { get; set; }
