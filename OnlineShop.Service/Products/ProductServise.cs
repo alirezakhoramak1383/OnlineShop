@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Products;
+using OnlineShop.Domin.Entities.Users;
+using OnlineShop.Model.ViewModel.Product;
+using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Products
 {
@@ -31,26 +34,44 @@ namespace OnlineShop.Service.Products
 
         public async Task UpdateProductAsync(Product product)
         {
-            _context.products.Update(product);
+            var Product = await _context.users.FindAsync(product.Id);
+            if (Product != null)
+            {
+                var UserViewModel = new EditViewModel
+                {
+                    Id = Product.Id,
+                    FullName = Product.FullName,
+                    Email = Product.Email,
+                    Password = Product.Password
+                };
+
+            }
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteProductAsync(int id)
         {
             var product = await _context.products.FindAsync(id);
-            if (product != null)
+            if (product != null && product.IsDeleted == false)
             {
-                _context.products.Remove(product);
-                await _context.SaveChangesAsync();
-            }
+                var Product = new ProductViewModel
+                {
+                    IsDeleted = product.IsDeleted = true
+
+                };
+
+            };
+
+            await _context.SaveChangesAsync();
         }
     }
-    public interface IProductService
-    {
-        Task<List<Product>> GetAllProductsAsync();
-        Task<Product> GetProductByIdAsync(int id);
-        Task CreateProductAsync(Product product);
-        Task UpdateProductAsync(Product product);
-        Task DeleteProductAsync(int id);
-    }
 }
+public interface IProductService
+{
+    Task<List<Product>> GetAllProductsAsync();
+    Task<Product> GetProductByIdAsync(int id);
+    Task CreateProductAsync(Product product);
+    Task UpdateProductAsync(Product product);
+    Task DeleteProductAsync(int id);
+}
+

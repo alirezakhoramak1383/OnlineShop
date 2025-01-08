@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Users;
-using static OnlineShop.Service.Users.UserService;
+using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Users
 {
@@ -32,26 +32,41 @@ namespace OnlineShop.Service.Users
 
         public async Task UpdateUserAsync(User user)
         {
-            _context.users.Update(user);
+            var person = await _context.users.FindAsync(user.Id);
+            if (person != null)
+            {
+                var UserViewModel = new EditViewModel
+                {
+                    Id= person.Id,
+                    FullName= person.FullName,
+                    Email= person.Email,
+                    Password= person.Password
+                };
+              
+            }
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteUserAsync(int id)
         {
             var user = await _context.users.FindAsync(id);
-            if (user != null)
+            if (user != null && user.IsDeleted==false)
             {
-                _context.users.Remove(user);
-                await _context.SaveChangesAsync();
+                var DeleteUser = new EditViewModel
+                {
+                    IsDeleted=user.IsDeleted=true
+                };
+               
             }
-        }
-        public interface IUserService
-        {
-            Task<List<User>> GetUsersAsync();
-            Task<User> GetUserByIdAsync(int id);
-            Task CreateUserAsync(User user);
-            Task UpdateUserAsync(User user);
-            Task DeleteUserAsync(int id);
-        }
+            await _context.SaveChangesAsync();
+        } 
+    }
+    public interface IUserService
+    {
+        Task<List<User>> GetUsersAsync();
+        Task<User> GetUserByIdAsync(int id);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(int id);
     }
 }

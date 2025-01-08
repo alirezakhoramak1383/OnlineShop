@@ -1,47 +1,64 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Categories;
+using OnlineShop.Domin.Entities.Products;
+using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Categories
 {
     public class CategoreyServise
     {
-        private readonly ShopContext _shopContext;
-        public CategoreyServise(ShopContext shopContext)
+        private readonly ShopContext _context;
+        public CategoreyServise(ShopContext context)
         {
-            _shopContext = shopContext;
+            _context = context;
         }
 
         public async Task<List<Category>> GetAllCategoriesAsync()
         {
-            return await _shopContext.categories.ToListAsync();
+            return await _context.categories.ToListAsync();
         }
 
         public async Task<Category> GetCategoryByIdAsync(int id)
         {
-            return await _shopContext.categories.FindAsync(id);
+            return await _context.categories.FindAsync(id);
         }
 
         public async Task CreateCategoryAsync(Category category)
         {
-            _shopContext.categories.Add(category);
-            await _shopContext.SaveChangesAsync();
+            _context.categories.Add(category);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCategoryAsync(Category category)
         {
-            _shopContext.categories.Update(category);
-            await _shopContext.SaveChangesAsync();
+            var Category = await _context.users.FindAsync(category.Id);
+            if (category != null)
+            {
+                var UserViewModel = new EditViewModel
+                {
+                    Id = Category.Id,
+                    FullName = Category.FullName,
+                    Email = Category.Email,
+                    Password = Category.Password
+                };
+
+            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteCategoryAsync(int id)
         {
-            var category = await _shopContext.categories.FindAsync(id);
-            if (category != null)
+            var category = await _context.users.FindAsync(id);
+            if (category != null && category.IsDeleted == false)
             {
-                _shopContext.categories.Remove(category);
-                await _shopContext.SaveChangesAsync();
+                var DeleteUser = new EditViewModel
+                {
+                    IsDeleted = category.IsDeleted = true
+                };
+
             }
+            await _context.SaveChangesAsync();
         }
         public interface ICategoryServise
         {
