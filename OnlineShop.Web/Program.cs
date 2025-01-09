@@ -1,10 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
+using OnlineShop.Service.Categories;
+using OnlineShop.Service.Products;
+using OnlineShop.Service.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductServise>();
+builder.Services.AddScoped<ICategoryServise, CategoreyServise>();
 builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShop")));
 var app = builder.Build();
 

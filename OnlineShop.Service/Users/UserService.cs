@@ -5,6 +5,15 @@ using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Users
 {
+    public interface IUserService
+    {
+        Task<List<User>> GetUsersAsync();
+        Task<User> GetUserByIdAsync(int id);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(int id);
+    }
+
     public class UserService: IUserService
     {
         private readonly ShopContext _context;
@@ -61,12 +70,5 @@ namespace OnlineShop.Service.Users
             await _context.SaveChangesAsync();
         } 
     }
-    public interface IUserService
-    {
-        Task<List<User>> GetUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
-        Task CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(int id);
-    }
+  
 }

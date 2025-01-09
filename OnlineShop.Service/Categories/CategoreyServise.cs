@@ -1,12 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Categories;
-using OnlineShop.Domin.Entities.Products;
 using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Categories
 {
-    public class CategoreyServise
+    public interface ICategoryServise
+    {
+        Task<List<Category>> GetAllCategoriesAsync();
+        Task<Category> GetCategoryByIdAsync(int id);
+        Task CreateCategoryAsync(Category category);
+        Task UpdateCategoryAsync(Category category);
+        Task DeleteCategoryAsync(int id);
+    }
+
+
+    public class CategoreyServise : ICategoryServise
     {
         private readonly ShopContext _context;
         public CategoreyServise(ShopContext context)
@@ -33,7 +42,7 @@ namespace OnlineShop.Service.Categories
         public async Task UpdateCategoryAsync(Category category)
         {
             var Category = await _context.users.FindAsync(category.Id);
-            if (category != null)
+            if (category != null && Category.IsDeleted==false)
             {
                 var UserViewModel = new EditViewModel
                 {
@@ -60,13 +69,6 @@ namespace OnlineShop.Service.Categories
             }
             await _context.SaveChangesAsync();
         }
-        public interface ICategoryServise
-        {
-            Task<List<Category>> GetAllCategoriesAsync();
-            Task<Category> GetCategoryByIdAsync(int id);
-            Task CreateCategoryAsync(Category category);
-            Task UpdateCategoryAsync(Category category);
-            Task DeleteCategoryAsync(int id);
-        }
+        
     }
 }

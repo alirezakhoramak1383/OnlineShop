@@ -1,12 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Products;
-using OnlineShop.Domin.Entities.Users;
 using OnlineShop.Model.ViewModel.Product;
 using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Products
 {
+    public interface IProductService
+    {
+        Task<List<Product>> GetAllProductsAsync();
+        Task<Product> GetProductByIdAsync(int id);
+        Task CreateProductAsync(Product product);
+        Task UpdateProductAsync(Product product);
+        Task DeleteProductAsync(int id);
+    }
+
+
     public class ProductServise : IProductService
     {
         private readonly ShopContext _context;
@@ -35,7 +44,7 @@ namespace OnlineShop.Service.Products
         public async Task UpdateProductAsync(Product product)
         {
             var Product = await _context.users.FindAsync(product.Id);
-            if (Product != null)
+            if (Product != null && Product.IsDeleted==false)
             {
                 var UserViewModel = new EditViewModel
                 {
@@ -66,12 +75,5 @@ namespace OnlineShop.Service.Products
         }
     }
 }
-public interface IProductService
-{
-    Task<List<Product>> GetAllProductsAsync();
-    Task<Product> GetProductByIdAsync(int id);
-    Task CreateProductAsync(Product product);
-    Task UpdateProductAsync(Product product);
-    Task DeleteProductAsync(int id);
-}
+
 
