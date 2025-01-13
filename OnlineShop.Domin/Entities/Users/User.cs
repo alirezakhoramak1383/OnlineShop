@@ -1,4 +1,6 @@
-﻿namespace OnlineShop.Domin.Entities.Users
+﻿using OnlineShop.Domin.Entities.Products;
+
+namespace OnlineShop.Domin.Entities.Users
 {
     public class User
     {
@@ -9,5 +11,6 @@
         public string Order { get; set; }
         public bool IsDeleted { get; set; }
         public string Password { get; set; }
+        public IEnumerable<UserProduct> UserProducts { get; set; }
     }
 }
