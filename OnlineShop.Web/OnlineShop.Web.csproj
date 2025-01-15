@@ -30,4 +30,9 @@
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<Authors>alireza</Authors>
+	</PropertyGroup>
+
+
 </Project>

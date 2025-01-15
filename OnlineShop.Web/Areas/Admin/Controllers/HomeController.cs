@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Domin.Entities.Products;
 using OnlineShop.Domin.Entities.Users;
-using OnlineShop.Model.ViewModel.Product;
 using OnlineShop.Model.ViewModel.User;
 using OnlineShop.Service.Users;
 
