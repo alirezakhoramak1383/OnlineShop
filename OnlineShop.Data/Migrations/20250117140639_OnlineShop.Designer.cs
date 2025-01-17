@@ -11,8 +11,8 @@ using OnlineShop.Data.Context;
 namespace OnlineShop.Data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20250108055119_AddIsDeleted")]
-    partial class AddIsDeleted
+    [Migration("20250117140639_OnlineShop")]
+    partial class OnlineShop
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,9 @@ namespace OnlineShop.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Existence")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -71,6 +74,29 @@ namespace OnlineShop.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("OnlineShop.Domin.Entities.Products.UserProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserProduct");
                 });
 
             modelBuilder.Entity("OnlineShop.Domin.Entities.Users.Role", b =>
@@ -97,6 +123,9 @@ namespace OnlineShop.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -105,6 +134,9 @@ namespace OnlineShop.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Order")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -148,6 +180,25 @@ namespace OnlineShop.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("OnlineShop.Domin.Entities.Products.UserProduct", b =>
+                {
+                    b.HasOne("OnlineShop.Domin.Entities.Products.Product", "Product")
+                        .WithMany("UserProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineShop.Domin.Entities.Users.User", "User")
+                        .WithMany("UserProducts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("OnlineShop.Domin.Entities.Users.UserInRole", b =>
                 {
                     b.HasOne("OnlineShop.Domin.Entities.Users.Role", "Role")
@@ -172,9 +223,19 @@ namespace OnlineShop.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("OnlineShop.Domin.Entities.Products.Product", b =>
+                {
+                    b.Navigation("UserProducts");
+                });
+
             modelBuilder.Entity("OnlineShop.Domin.Entities.Users.Role", b =>
                 {
                     b.Navigation("UserInRoles");
+                });
+
+            modelBuilder.Entity("OnlineShop.Domin.Entities.Users.User", b =>
+                {
+                    b.Navigation("UserProducts");
                 });
 #pragma warning restore 612, 618
         }

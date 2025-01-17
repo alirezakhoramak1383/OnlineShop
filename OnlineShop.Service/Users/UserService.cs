@@ -25,7 +25,7 @@ namespace OnlineShop.Service.Users
 
         public async Task<List<User>> GetUsersAsync()
         {
-            return await _context.users.ToListAsync();
+            return await _context.users.Where(x=>x.IsDeleted==false).ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
