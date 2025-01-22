@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Service.Products;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ManageProductController : Controller
     {
-        public IActionResult Index()
+        private readonly IProductService _productService;
+        public ManageProductController(IProductService productService)
         {
-            return View();
+            _productService= productService;
+        }
+        public async Task<ActionResult<ProductServise>> Index()
+        {
+            var Product= await _productService.GetAllProductsAsync();
+            return View("Index",Product);
         }
     }
 }

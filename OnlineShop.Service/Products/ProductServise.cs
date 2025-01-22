@@ -33,6 +33,7 @@ namespace OnlineShop.Service.Products
                 Name = s.Name,
                 Description = s.Description,
                 ImagePath = s.ImagePath,
+                Existence = s.Existence,
               
             })
               .ToListAsync();
@@ -46,6 +47,7 @@ namespace OnlineShop.Service.Products
                 Name = s.Name,
                 Description = s.Description,
                 ImagePath = s.ImagePath,
+                Existence = s.Existence,
 
             })
                 .FirstOrDefaultAsync();
@@ -58,6 +60,7 @@ namespace OnlineShop.Service.Products
                 Name = productViewModel.Name,
                 Description = productViewModel.Description,
                 ImagePath = productViewModel.ImagePath,
+                Existence= productViewModel.Existence,
                 IsDeleted = false
             };
              _context.products.Add(product);
@@ -67,15 +70,15 @@ namespace OnlineShop.Service.Products
 
         public async Task UpdateProductAsync(Product product)
         {
-            var Product = await _context.users.FindAsync(product.Id);
+            var Product = await _context.products.FindAsync(product.Id);
             if (Product != null && Product.IsDeleted==false)
             {
-                var UserViewModel = new UserViewModel
+                var ProductViewModel = new ProductViewModel
                 {
-                    Id = Product.Id,
-                    FullName = Product.FullName,
-                    Email = Product.Email,
-                    Password = Product.Password
+                   Name= product.Name,
+                   Description= product.Description,
+                   ImagePath = product.ImagePath,
+                   Existence= product.Existence,  
                 };
 
             }
@@ -90,11 +93,8 @@ namespace OnlineShop.Service.Products
                 var Product = new ProductViewModel
                 {
                     IsDeleted = true
-
                 };
-
             };
-
             await _context.SaveChangesAsync();
         }
     }

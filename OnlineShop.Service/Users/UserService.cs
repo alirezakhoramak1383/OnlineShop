@@ -31,9 +31,9 @@ namespace OnlineShop.Service.Users
                 FullName = s.FullName,
                 Address = s.Address,
                 Email = s.Email,
+                Order = s.Order,
                 Password = s.Password,
-            })
-               .ToListAsync();
+            }).ToListAsync();
         }
 
         public async Task<UserViewModel> GetUserByIdAsync(int id)

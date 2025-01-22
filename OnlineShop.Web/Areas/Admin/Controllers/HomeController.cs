@@ -13,20 +13,10 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             _userService = userService;
         }
         [Area("Admin")]
-        public async Task<ActionResult<User>> Index()
+        public async Task<ActionResult<UserViewModel>> Index()
         {
             var users = await _userService.GetUsersAsync();
-            var result= users.Select(s => new UserViewModel
-            {
-                Id = s.Id,
-                FullName = s.FullName,
-                Email = s.Email,
-                Address = s.Address,
-                Order = s.Order,
-                IsDeleted = false,
-                Password = s.Password
-            }).ToList();
-            return View("Index", result);
+            return View("Index", users);
         }
 
     }
