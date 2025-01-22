@@ -7,9 +7,9 @@ namespace OnlineShop.Service.Users
 {
     public interface IUserService
     {
-        Task<List<User>> GetUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
-        Task CreateUserAsync(User user);
+        Task<List<UserViewModel>> GetUsersAsync();
+        Task<UserViewModel> GetUserByIdAsync(int id);
+        Task CreateUserAsync(UserViewModel userviewModel);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);
     }
@@ -23,28 +23,52 @@ namespace OnlineShop.Service.Users
             _context = context;
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<List<UserViewModel>> GetUsersAsync()
         {
-            return await _context.users.Where(x=>x.IsDeleted==false).ToListAsync();
+            return await _context.users.Where(x => x.IsDeleted == false).Select(s => new UserViewModel
+            {
+                Id = s.Id,
+                FullName = s.FullName,
+                Address = s.Address,
+                Email = s.Email,
+                Password = s.Password,
+            })
+               .ToListAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<UserViewModel> GetUserByIdAsync(int id)
         {
-            return await _context.users.FindAsync(id);
+            return await _context.users.Where(u=>u.Id==id && u.IsDeleted==false).Select(x=>new UserViewModel
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+                Address = x.Address,
+                Email = x.Email,
+                Password = x.Password,
+
+            })
+                .FirstOrDefaultAsync();
         }
 
-        public async Task CreateUserAsync(User user)
+        public async Task CreateUserAsync(UserViewModel userViewModel)
         {
+            var user = new User()
+            {
+                FullName = userViewModel.FullName,
+                Address = userViewModel.Address,
+                Email = userViewModel.Email,
+                Password = userViewModel.Password,
+            };
             _context.users.Add(user);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(User user)
         {
-            var person = await _context.users.FindAsync(user.Id);
+            var person = await _context.users.FirstOrDefaultAsync(x=>x.Id==user.Id);
             if (person != null)
             {
-                var UserViewModel = new EditViewModel
+                var UserViewModel = new UserViewModel
                 {
                     Id= person.Id,
                     FullName= person.FullName,
@@ -61,9 +85,9 @@ namespace OnlineShop.Service.Users
             var user = await _context.users.FindAsync(id);
             if (user != null && user.IsDeleted==false)
             {
-                var DeleteUser = new EditViewModel
+                var DeleteUser = new UserViewModel
                 {
-                    IsDeleted=user.IsDeleted=true
+                    IsDeleted = true
                 };
                
             }

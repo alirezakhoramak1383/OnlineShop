@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Model.ViewModel.User
 {
-    public class EditViewModel
+    public class UserViewModel
     {
         public long Id { get; set; }
         public string FullName { get; set; }

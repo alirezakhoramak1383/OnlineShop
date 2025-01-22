@@ -5,9 +5,6 @@ using OnlineShop.Service.Users;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
-    /// <summary>
-    /// .......
-    /// </summary>
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
@@ -19,7 +16,7 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
         public async Task<ActionResult<User>> Index()
         {
             var users = await _userService.GetUsersAsync();
-            var result= users.Select(s => new EditViewModel
+            var result= users.Select(s => new UserViewModel
             {
                 Id = s.Id,
                 FullName = s.FullName,

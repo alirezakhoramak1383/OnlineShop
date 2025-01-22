@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Categories;
+using OnlineShop.Model.ViewModel.Category;
 using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Categories
 {
     public interface ICategoryServise
     {
-        Task<List<Category>> GetAllCategoriesAsync();
-        Task<Category> GetCategoryByIdAsync(int id);
-        Task CreateCategoryAsync(Category category);
+        Task<List<CategoryViewModel>> GetAllCategoriesAsync();
+        Task<CategoryViewModel> GetCategoryByIdAsync(int id);
+        Task CreateCategoryAsync(CategoryViewModel categoryViewModel);
         Task UpdateCategoryAsync(Category category);
         Task DeleteCategoryAsync(int id);
     }
@@ -23,33 +24,46 @@ namespace OnlineShop.Service.Categories
             _context = context;
         }
 
-        public async Task<List<Category>> GetAllCategoriesAsync()
+        public async Task<List<CategoryViewModel>> GetAllCategoriesAsync()
         {
-            return await _context.categories.ToListAsync();
+            return await _context.categories.Where(x=>x.IsDeleted==false).Select(s=>new CategoryViewModel
+            {
+                Id = s.Id,
+                Title = s.Title,
+            })
+                .ToListAsync();
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int id)
+        public async Task<CategoryViewModel> GetCategoryByIdAsync(int id)
         {
-            return await _context.categories.FindAsync(id);
+            return await _context.categories.Where(x=>x.Id==id).Select(s=>new CategoryViewModel
+            {
+                Id = s.Id,
+                Title = s.Title,
+
+            }).FirstOrDefaultAsync();
         }
 
-        public async Task CreateCategoryAsync(Category category)
+        public async Task CreateCategoryAsync(CategoryViewModel categoryViewModel)
         {
-            _context.categories.Add(category);
+            var Category = new Category
+            {
+                Title = categoryViewModel.Title,
+                IsDeleted = false
+            };
+            _context.categories.Add(Category);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCategoryAsync(Category category)
         {
-            var Category = await _context.users.FindAsync(category.Id);
+            var Category = await _context.categories.FindAsync(category.Id);
             if (category != null && Category.IsDeleted==false)
             {
-                var UserViewModel = new EditViewModel
+                var CategoryViewModel = new CategoryViewModel
                 {
                     Id = Category.Id,
-                    FullName = Category.FullName,
-                    Email = Category.Email,
-                    Password = Category.Password
+                    Title= category.Title,    
                 };
 
             }
@@ -61,9 +75,9 @@ namespace OnlineShop.Service.Categories
             var category = await _context.users.FindAsync(id);
             if (category != null && category.IsDeleted == false)
             {
-                var DeleteUser = new EditViewModel
+                var DeleteUser = new CategoryViewModel
                 {
-                    IsDeleted = category.IsDeleted = true
+                    IsDeleted = true
                 };
 
             }
