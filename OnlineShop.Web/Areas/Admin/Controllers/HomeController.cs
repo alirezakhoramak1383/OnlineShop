@@ -19,5 +19,11 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             return View("Index", users);
         }
 
+        public async Task <ActionResult> LoadPartialView()
+        {
+            return  PartialView("MyPartialView"); 
+        }
+
+
     }
 }

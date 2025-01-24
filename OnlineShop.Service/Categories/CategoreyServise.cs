@@ -2,7 +2,6 @@
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Categories;
 using OnlineShop.Model.ViewModel.Category;
-using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Categories
 {
