@@ -38,8 +38,26 @@
 
 </head>
 <body class="hold-transition sidebar-mini">
+    <!---------------Modal--------------->
+    <div  class="modal fade" id="Modal_Main" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="Modal_body" class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---------------Modal--------------->
     <div class="wrapper">
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
             <!-- Left navbar links -->
@@ -242,6 +260,8 @@
                 @RenderBody()
             </section>
             <!-- /.content -->
+        
+       
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -287,6 +307,8 @@
     <script src="~/accset/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/accset/dist/js/demo.js"></script>
+
+    @await RenderSectionAsync("Scripts", required:false )
 </body>
 </html>
 

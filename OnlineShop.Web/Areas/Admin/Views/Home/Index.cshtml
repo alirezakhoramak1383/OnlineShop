@@ -48,7 +48,7 @@
                                             <button type="button" style="width: 80px;" class="btn btn-block btn-danger custom-btn">حذف</button>
                                         </span>
                                         <span style="display: inline-block; margin-right: 4px;">
-                                            <button id="btnLoadPartial" type="button" style="width: 80px;" class="btn btn-block btn-warning custom-btn">ویرایش </button>
+                                            <button id="btnLoadPartial" type="button" onclick="ShowModal()" style="width: 80px;" class="btn btn-block btn-warning custom-btn">ویرایش </button>
                                         </span>
                                         <span style="display: inline-block; margin-right: 4px;">
                                             <button type="button" style="width: 80px;" class="btn btn-block btn-info">جزئیات </button>
@@ -68,21 +68,18 @@
     <!-- /.content -->
 </div>
 @section Scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnLoadPartial").click(function () {
-                $.ajax({
-                    url: '@Url.Action("LoadPartialView", "Home")', // آدرس اکشن که Partial View را بارگذاری می‌کند
-                    type: 'GET',
-                    success: function (data) {
-                        // جایگزینی محتوای div با داده‌های برگشتی از Partial View
-                        $("#partialViewContainer").html(data);
-                    },
-                    error: function () {
-                        alert("خطا در بارگذاری Partial View");
-                    }
-                });
+    <script>
+        function ShowModal()
+        {
+            $.ajax({
+                type:"get",
+                url:"/Admin/Home/LoadPartialView",
+                success:function (data){
+                    $("#Modal_body").html("");
+                    $("#Modal_body").html(data);
+                    $("#Modal_Main").modal('toggle');
+                }
             });
-        });
+        }
     </script>
 }

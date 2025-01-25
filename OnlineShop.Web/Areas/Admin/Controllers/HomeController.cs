@@ -18,10 +18,10 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             var users = await _userService.GetUsersAsync();
             return View("Index", users);
         }
-
-        public async Task <ActionResult> LoadPartialView()
+        [Area("admin")]
+        public  IActionResult LoadPartialView()
         {
-            return  PartialView("MyPartialView"); 
+            return PartialView("_PopupEdit"); 
         }
 
 
