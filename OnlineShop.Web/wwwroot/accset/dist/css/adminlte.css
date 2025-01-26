@@ -3736,8 +3736,7 @@ input[type="button"].btn-block {
 }
 
 .navbar {
-  position: relative;
-  display: flex;
+  display:flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -8584,6 +8583,7 @@ body,
 }
 
 .main-sidebar {
+    z-index:0;
   position: fixed;
   top: 0;
   left: 0;
@@ -8805,7 +8805,6 @@ body,
  * ------------------
  */
 .main-sidebar {
-  z-index: 1100;
   height: 100vh;
   overflow-y: hidden;
 }
