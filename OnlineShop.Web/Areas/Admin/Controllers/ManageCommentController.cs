@@ -2,9 +2,10 @@
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ManageCommentController : Controller
     {
-        [Area("Admin")]
+      
         public IActionResult Index()
         {
             return View();

@@ -5,6 +5,7 @@ using OnlineShop.Service.Users;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
+    [Area("admin")]
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
@@ -12,13 +13,11 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
         {
             _userService = userService;
         }
-        [Area("Admin")]
         public async Task<ActionResult<UserViewModel>> Index()
         {
             var users = await _userService.GetUsersAsync();
             return View("Index", users);
         }
-        [Area("admin")]
         public  IActionResult LoadPartialView()
         {
             return PartialView("_PopupEdit"); 
