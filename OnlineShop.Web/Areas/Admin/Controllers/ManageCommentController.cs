@@ -2,7 +2,7 @@
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
-    public class CommntController : Controller
+    public class ManageCommentController : Controller
     {
         [Area("Admin")]
         public IActionResult Index()

@@ -8,6 +8,7 @@
         public string ImagePath{get; set;}
         public int Existence { get; set; }
         public bool IsDeleted { get; set; }
+        public string categoryName { get; set; }
 
     }
 }
