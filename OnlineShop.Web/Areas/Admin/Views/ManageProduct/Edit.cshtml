@@ -1,0 +1,76 @@
+﻿@using OnlineShop.Model.ViewModel.Product
+@model ProductViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>سفارشات</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="#">کاربران</a></li>
+                        <li class="breadcrumb-item active">ویرایش کاربر</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label asp-for="Name"></label>
+                                <input type="text" asp-for="Name" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.Name)">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <input type="text" asp-for="Description" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.Description)">
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ImagePath"></label>
+                                <input type="text" asp-for="ImagePath" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.ImagePath)">
+                                <span asp-validation-for="ImagePath" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Existence"></label>
+                                <input type="number" asp-for="Existence" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.Existence)">
+                                <span asp-validation-for="Existence" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="categoryName"></label>
+                                <input type="text" asp-for="categoryName" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.categoryName)">
+                                <span asp-validation-for="categoryName" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">ویرایش</button>
+                            <button type="submit" class="btn btn-close">کنسل</button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+

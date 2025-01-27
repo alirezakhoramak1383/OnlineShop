@@ -10,7 +10,7 @@ namespace OnlineShop.Service.Users
         Task<List<UserViewModel>> GetUsersAsync();
         Task<UserViewModel> GetUserByIdAsync(int id);
         Task CreateUserAsync(UserViewModel userviewModel);
-        Task UpdateUserAsync(User user);
+        Task UpdateUserAsync(UserViewModel userViewMdel);
         Task DeleteUserAsync(int id);
     }
 
@@ -45,6 +45,7 @@ namespace OnlineShop.Service.Users
                 Address = x.Address,
                 Email = x.Email,
                 Password = x.Password,
+                Order=x.Order
 
             })
                 .FirstOrDefaultAsync();
@@ -63,19 +64,16 @@ namespace OnlineShop.Service.Users
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(UserViewModel userViewModel)
         {
-            var person = await _context.users.FirstOrDefaultAsync(x=>x.Id==user.Id);
+            var person = await _context.users.FirstOrDefaultAsync(x=>x.Id== userViewModel.Id);
             if (person != null)
             {
-                var UserViewModel = new UserViewModel
-                {
-                    Id= person.Id,
-                    FullName= person.FullName,
-                    Email= person.Email,
-                    Password= person.Password
-                };
-              
+                person.FullName = userViewModel.FullName;
+                person.Email = userViewModel.Email;
+                person.Password = userViewModel.Password;
+                person.Address = userViewModel.Address;
+                person.Order = userViewModel.Order;
             }
             await _context.SaveChangesAsync();
         }
@@ -83,14 +81,9 @@ namespace OnlineShop.Service.Users
         public async Task DeleteUserAsync(int id)
         {
             var user = await _context.users.FindAsync(id);
-            if (user != null && user.IsDeleted==false)
-            {
-                var DeleteUser = new UserViewModel
-                {
-                    IsDeleted = true
-                };
-               
-            }
+
+            user.IsDeleted = true;
+
             await _context.SaveChangesAsync();
         } 
     }

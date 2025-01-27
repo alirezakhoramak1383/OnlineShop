@@ -1,17 +1,19 @@
-﻿@using OnlineShop.Model.ViewModel.User
-@model List<UserViewModel>
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>سفارشات</h1>
+                    <h1>صفحه اصلی</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                        <li class="breadcrumb-item active">جداول داده</li>
+                        <li class="breadcrumb-item"><a href="#">صفحه اصلی</a></li>
+                        <li class="breadcrumb-item active">پیشخوان</li>
                     </ol>
                 </div>
             </div>
@@ -25,38 +27,8 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>نام و نام خانوادگی</th>
-                                    <th>سفارش </th>
-                                    <th>آدرس</th>
-                                    <th>قابلیت ها</th>
-
-                                </tr>
-                            </thead>
-                            @foreach(var user in Model)
-                            {
-                                <tr>
-                                    <td> @user.Id </td>
-                                    <td> @user.FullName </td>
-                                    <td> @user.Order </td>
-                                    <td> @user.Address </td>
-                                    <td style="display: flex; ">
-                                        <span style="display: inline-block; margin-right:3px;">
-                                            <button type="button" style="width: 80px;" class="btn btn-block btn-danger custom-btn">حذف</button>
-                                        </span>
-                                        <span style="display: inline-block; margin-right: 4px;">
-                                            <button id="btnLoadPartial" type="button" onclick="ShowModal()" style="width: 80px;" class="btn btn-block btn-warning custom-btn">ویرایش </button>
-                                        </span>
-                                        <span style="display: inline-block; margin-right: 4px;">
-                                            <button type="button" style="width: 80px;" class="btn btn-block btn-info">جزئیات </button>
-                                        </span>
-                                    </td>
-                                </tr>
-                            }
-                        </table>
+                        <h2>صفحه اصلی</h2>
+                        <h1 class="text-success">خوش آمدید</h1>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -67,19 +39,3 @@
     </section>
     <!-- /.content -->
 </div>
-@section Scripts {
-    <script>
-        function ShowModal()
-        {
-            $.ajax({
-                type:"get",
-                url:"/Admin/Home/LoadPartialView",
-                success:function (data){
-                    $("#Modal_body").html("");
-                    $("#Modal_body").html(data);
-                    $("#Modal_Main").modal('toggle');
-                }
-            });
-        }
-    </script>
-}

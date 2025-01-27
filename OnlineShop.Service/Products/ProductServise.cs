@@ -10,8 +10,8 @@ namespace OnlineShop.Service.Products
     {
         Task<List<ProductViewModel>> GetAllProductsAsync();
         Task<ProductViewModel> GetProductByIdAsync(int id);
-        Task CreateProductAsync(ProductViewModel productViewModel);
-        Task UpdateProductAsync(Product product);
+        Task CreateProductAsync(ProductViewModel ProductViewModel);
+        Task UpdateProductAsync(ProductViewModel ProductViewModel);
         Task DeleteProductAsync(int id);
     }
 
@@ -69,20 +69,17 @@ namespace OnlineShop.Service.Products
       
         }
 
-        public async Task UpdateProductAsync(Product product)
+        public async Task UpdateProductAsync(ProductViewModel productViewModel)
         {
-            var Product = await _context.products.Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id==product.Id);
+            var Product = await _context.products.Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id== productViewModel.Id);
             if (Product != null && Product.IsDeleted==false)
             {
-                var ProductViewModel = new ProductViewModel
-                {
-                   Name= product.Name,
-                   Description= product.Description,
-                   ImagePath = product.ImagePath,
-                   Existence= product.Existence, 
-                   categoryName=product.Category.Title
-                };
-
+                Product.Name = productViewModel.Name;
+                Product.Description = productViewModel.Description;
+                Product.ImagePath = productViewModel.ImagePath;
+                Product.Existence = productViewModel.Existence;
+                Product.Category.Title = productViewModel.categoryName;
+                
             }
             await _context.SaveChangesAsync();
         }
