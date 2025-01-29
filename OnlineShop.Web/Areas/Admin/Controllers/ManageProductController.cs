@@ -31,9 +31,10 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             await _productService.UpdateProductAsync(model);
             return RedirectToAction("Index");
         }
-        public async Task<ActionResult> Create()
+        public async Task<ActionResult> Create(ProductViewModel productViewModel)
         {
-            return View();
+            await _productService.CreateProductAsync(productViewModel);
+            return RedirectToPage("Index");
         }
 
     }
