@@ -2,7 +2,6 @@
 using OnlineShop.Data.Context;
 using OnlineShop.Domin.Entities.Products;
 using OnlineShop.Model.ViewModel.Product;
-using OnlineShop.Model.ViewModel.User;
 
 namespace OnlineShop.Service.Products
 {
@@ -27,31 +26,30 @@ namespace OnlineShop.Service.Products
 
         public async Task<List<ProductViewModel>> GetAllProductsAsync()
         {
-            return await _context.products.Where(x=>x.IsDeleted==false).Include(x => x.Category).Select(s=> new ProductViewModel
+            return await _context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).Select(s => new ProductViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
                 ImagePath = s.ImagePath,
                 Existence = s.Existence,
-                categoryName=s.Category.Title
-              
-            })
-              .ToListAsync();
+                CategoryName = s.Category.Title
+
+            }).ToListAsync();
         }
 
         public async Task<ProductViewModel> GetProductByIdAsync(int id)
         {
-            return await _context.products.Where(x=>x.Id==id && x.IsDeleted==false).Include(x=>x.Category).Select(s=>new ProductViewModel
+            return await _context.Products.Where(x => x.Id == id && x.IsDeleted == false).Include(x => x.Category).Select(s => new ProductViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
                 ImagePath = s.ImagePath,
-                Existence = s.Existence,  
-                categoryName=s.Category.Title
-            })
-                .FirstOrDefaultAsync();
+                Existence = s.Existence,
+                CategoryId = s.CategoryId,
+                CategoryName = s.Category.Title
+            }).FirstOrDefaultAsync();
         }
 
         public async Task CreateProductAsync(ProductViewModel productViewModel)
@@ -61,38 +59,36 @@ namespace OnlineShop.Service.Products
                 Name = productViewModel.Name,
                 Description = productViewModel.Description,
                 ImagePath = productViewModel.ImagePath,
-                Existence= productViewModel.Existence,
+                Existence = productViewModel.Existence,
+                CategoryId = productViewModel.CategoryId,
                 IsDeleted = false
             };
-             _context.products.Add(product);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
-      
+
         }
 
         public async Task UpdateProductAsync(ProductViewModel productViewModel)
         {
-            var Product = await _context.products.Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id== productViewModel.Id);
-            if (Product != null && Product.IsDeleted==false)
+            var Product = await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == productViewModel.Id);
+            if (Product != null && Product.IsDeleted == false)
             {
                 Product.Name = productViewModel.Name;
                 Product.Description = productViewModel.Description;
                 Product.ImagePath = productViewModel.ImagePath;
                 Product.Existence = productViewModel.Existence;
-                Product.Category.Title = productViewModel.categoryName;
-                
+                Product.Category.Title = productViewModel.CategoryName;
+
             }
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteProductAsync(int id)
         {
-            var product = await _context.products.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             if (product != null && product.IsDeleted == false)
             {
-                var Product = new ProductViewModel
-                {
-                    IsDeleted = true
-                };
+                product.IsDeleted = true;
             };
             await _context.SaveChangesAsync();
         }

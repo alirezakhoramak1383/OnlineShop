@@ -25,7 +25,7 @@ namespace OnlineShop.Service.Users
 
         public async Task<List<UserViewModel>> GetUsersAsync()
         {
-            return await _context.users.Where(x => x.IsDeleted == false).Select(s => new UserViewModel
+            return await _context.Users.Where(x => x.IsDeleted == false).Select(s => new UserViewModel
             {
                 Id = s.Id,
                 FullName = s.FullName,
@@ -38,7 +38,7 @@ namespace OnlineShop.Service.Users
 
         public async Task<UserViewModel> GetUserByIdAsync(int id)
         {
-            return await _context.users.Where(u=>u.Id==id && u.IsDeleted==false).Select(x=>new UserViewModel
+            return await _context.Users.Where(u=>u.Id==id && u.IsDeleted==false).Select(x=>new UserViewModel
             {
                 Id = x.Id,
                 FullName = x.FullName,
@@ -60,13 +60,13 @@ namespace OnlineShop.Service.Users
                 Email = userViewModel.Email,
                 Password = userViewModel.Password,
             };
-            _context.users.Add(user);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(UserViewModel userViewModel)
         {
-            var person = await _context.users.FirstOrDefaultAsync(x=>x.Id== userViewModel.Id);
+            var person = await _context.Users.FirstOrDefaultAsync(x=>x.Id== userViewModel.Id);
             if (person != null)
             {
                 person.FullName = userViewModel.FullName;
@@ -80,7 +80,7 @@ namespace OnlineShop.Service.Users
 
         public async Task DeleteUserAsync(int id)
         {
-            var user = await _context.users.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
             user.IsDeleted = true;
 

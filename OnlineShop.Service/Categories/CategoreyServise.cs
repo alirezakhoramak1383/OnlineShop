@@ -25,7 +25,7 @@ namespace OnlineShop.Service.Categories
 
         public async Task<List<CategoryViewModel>> GetAllCategoriesAsync()
         {
-            return await _context.categories.Where(x=>x.IsDeleted==false).Select(s=>new CategoryViewModel
+            return await _context.Categories.Where(x=>x.IsDeleted==false).Select(s=>new CategoryViewModel
             {
                 Id = s.Id,
                 Title = s.Title,
@@ -35,7 +35,7 @@ namespace OnlineShop.Service.Categories
 
         public async Task<CategoryViewModel> GetCategoryByIdAsync(int id)
         {
-            return await _context.categories.Where(x=>x.Id==id).Select(s=>new CategoryViewModel
+            return await _context.Categories.Where(x=>x.Id==id).Select(s=>new CategoryViewModel
             {
                 Id = s.Id,
                 Title = s.Title,
@@ -50,13 +50,13 @@ namespace OnlineShop.Service.Categories
                 Title = categoryViewModel.Title,
                 IsDeleted = false
             };
-            _context.categories.Add(Category);
+            _context.Categories.Add(Category);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCategoryAsync(Category category)
         {
-            var Category = await _context.categories.FindAsync(category.Id);
+            var Category = await _context.Categories.FindAsync(category.Id);
             if (category != null && Category.IsDeleted==false)
             {
                 var CategoryViewModel = new CategoryViewModel
@@ -71,7 +71,7 @@ namespace OnlineShop.Service.Categories
 
         public async Task DeleteCategoryAsync(int id)
         {
-            var category = await _context.users.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category != null && category.IsDeleted == false)
             {
                 var DeleteUser = new CategoryViewModel

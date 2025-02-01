@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Data.Context;
 
@@ -11,11 +10,9 @@ using OnlineShop.Data.Context;
 namespace OnlineShop.Data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20250117140639_OnlineShop")]
-    partial class OnlineShop
+    partial class ShopContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +37,7 @@ namespace OnlineShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("OnlineShop.Domin.Entities.Products.Product", b =>
@@ -73,7 +70,7 @@ namespace OnlineShop.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("products");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("OnlineShop.Domin.Entities.Products.UserProduct", b =>
@@ -143,7 +140,7 @@ namespace OnlineShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("OnlineShop.Domin.Entities.Users.UserInRole", b =>

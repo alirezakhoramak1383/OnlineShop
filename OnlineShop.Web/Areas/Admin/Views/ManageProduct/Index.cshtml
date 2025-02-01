@@ -26,7 +26,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <a style="color:white;" class="btn btn-primary float-left mb-3 "> ساخت محصول</a>
+                        <a asp-action="Create" asp-controller="ManageProduct" style="color:white;" class="btn btn-primary float-left mb-3 "> ساخت محصول</a>
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -48,7 +48,7 @@
                                     <td> <img style="width:66px; height:50px;" src="@product.ImagePath" alt="Product Image" /> </td>
                                     <td> @product.Description </td>
                                     <td> @product.Existence </td>
-                                    <td> @product.categoryName </td>
+                                    <td> @product.CategoryName </td>
                                     <td>
                                         <span style="display: inline-block; margin-right:3px;">
                                             <button type="button" style="width: 80px;" class="btn btn-block btn-danger custom-btn">حذف</button>

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineShop.Data.Context;
 using OnlineShop.Model.ViewModel.Product;
+using OnlineShop.Service.Categories;
 using OnlineShop.Service.Products;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
@@ -8,9 +11,14 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
     public class ManageProductController : Controller
     {
         private readonly IProductService _productService;
-        public ManageProductController(IProductService productService)
+        private readonly ICategoryServise _categoryServise;
+        private readonly ShopContext _context;
+
+
+        public ManageProductController(IProductService productService, ShopContext context)
         {
             _productService = productService;
+            _context = context;
         }
         public async Task<ActionResult<ProductServise>> Index()
         {
@@ -28,14 +36,43 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(ProductViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             await _productService.UpdateProductAsync(model);
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> Create()
+        {
+            ViewBag.Categories = await _context.Categories.Select(s => new
+            {
+                s.Id,
+                s.Title
+            }).ToListAsync();
+
+            return View();
+
+        }
+        [HttpPost]
         public async Task<ActionResult> Create(ProductViewModel productViewModel)
         {
-            await _productService.CreateProductAsync(productViewModel);
-            return RedirectToPage("Index");
-        }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = await _context.Categories.Select(s => new
+                {
+                    s.Id,
+                    s.Title
+                }).ToListAsync();
 
+                return View(productViewModel);
+            }
+
+            await _productService.CreateProductAsync(productViewModel);
+            return RedirectToAction("Index");
+        }
     }
+
 }
+

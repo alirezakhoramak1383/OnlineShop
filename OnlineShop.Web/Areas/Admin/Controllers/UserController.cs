@@ -33,6 +33,10 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(UserViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             await _userService.UpdateUserAsync(model);
 
             return RedirectToAction("Index");
