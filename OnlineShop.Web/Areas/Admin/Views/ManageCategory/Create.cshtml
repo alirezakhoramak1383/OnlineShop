@@ -1,0 +1,53 @@
+﻿@using OnlineShop.Model.ViewModel.Category
+@model CategoryViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>سفارشات</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="#">کاربران</a></li>
+                        <li class="breadcrumb-item active">ویرایش کاربر</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label asp-for="Title"></label>
+                                <input type="text" asp-for="Title" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.Title)">
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-success">اضافه کردن</button>
+                            <button type="submit" class="btn btn-close">کنسل</button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+
