@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Model.ViewModel.Category;
 using OnlineShop.Service.Categories;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ManageCategoryController : Controller
     {
         private readonly ICategoryServise _categoryServise;

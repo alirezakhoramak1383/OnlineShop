@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Model.ViewModel.User;
 using OnlineShop.Service.Users;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
     [Area("admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

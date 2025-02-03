@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Model.ViewModel.Product;
@@ -8,6 +9,7 @@ using OnlineShop.Service.Products;
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ManageProductController : Controller
     {
         private readonly IProductService _productService;
