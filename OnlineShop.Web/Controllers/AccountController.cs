@@ -47,6 +47,7 @@ namespace OnlineShop.Web.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Email),
                 new Claim("FullName", user.FullName),
+                 new Claim("UserId", user.Id.ToString()),
                 new Claim(ClaimTypes.Role, "Administrator"),
             };
 

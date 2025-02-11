@@ -1,5 +1,7 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "_AdminLayout";
+    var greetingMessage = ViewBag.GreetingMessage;
 }
 
 <!DOCTYPE html>
@@ -47,7 +49,7 @@
                     <a class="color  nav-link" data-widget="pushmenu" href="#"><i style="color:black; " class="fa fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link"><p style="color:black;">خانه</p></a>
+                    <p class="nav-link" style="color:black;">@greetingMessage</p>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link"><p style="color:black;">تماس</p></a>
