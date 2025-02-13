@@ -29,7 +29,9 @@ namespace OnlineShop.Web
 
             return "";
         }
-
+       
+       ///////////////////For Learning///////////////////
+       
         public static int PlusOne(this int x)
         {
             return (x + 1);
