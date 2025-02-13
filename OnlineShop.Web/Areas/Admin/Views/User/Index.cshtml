@@ -1,5 +1,10 @@
 ﻿@using OnlineShop.Model.ViewModel.User
 @model List<UserViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var greetingMessage = ViewBag.GreetingMessage;
+}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

@@ -45,9 +45,9 @@ namespace OnlineShop.Web.Controllers
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Email),
                 new Claim("FullName", user.FullName),
-                 new Claim("UserId", user.Id.ToString()),
                 new Claim(ClaimTypes.Role, "Administrator"),
             };
 
@@ -69,7 +69,7 @@ namespace OnlineShop.Web.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync( CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return Redirect("/Account/Login");
         }
