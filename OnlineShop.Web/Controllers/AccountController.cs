@@ -71,7 +71,7 @@ namespace OnlineShop.Web.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return Redirect("/Account/Login");
+            return RedirectToAction("/Account/Login");
         }
     }
 }
