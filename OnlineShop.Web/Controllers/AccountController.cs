@@ -20,6 +20,11 @@ namespace OnlineShop.Web.Controllers
         // صفحه لاگین
         public IActionResult Login()
         {
+            var isLogin = User.Identity.IsAuthenticated;
+
+            if(isLogin)
+                return Redirect("/Admin");
+
             return View();
         }
 
@@ -71,7 +76,7 @@ namespace OnlineShop.Web.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("/Account/Login");
+            return Redirect("/Account/Login");
         }
     }
 }
