@@ -38,13 +38,13 @@ namespace OnlineShop.Web.Controllers
 
             if (user == null)
             {
-                ModelState.AddModelError("UserName", "نام کاربری یا کلمه عبور اشتباه است");
+                ModelState.AddModelError("UserName", "نام کاربری اشتباه است");
                 return View(model);
             }
 
             if (user.Password != model.Password)
             {
-                ModelState.AddModelError("UserName", "نام کاربری یا کلمه عبور اشتباه است");
+                ModelState.AddModelError("UserName", "کلمه عبور اشتباه است");
                 return View(model);
             }
 

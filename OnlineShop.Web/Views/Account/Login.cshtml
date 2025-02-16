@@ -42,19 +42,25 @@
 
                 <form method="post">
                     <div class="input-group mb-3">
+
                         <input asp-for="UserName" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.UserName)">
+
                         <div class="input-group-append">
                             <span class="fa fa-envelope input-group-text"></span>
                         </div>
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+
                     </div>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                     <div class="input-group mb-3">
+
                         <input asp-for="Password" type="password" class="form-control" placeholder="@Html.DisplayNameFor(m=>m.Password)">
                         <div class="input-group-append">
                             <span class="fa fa-lock input-group-text"></span>
                         </div>
-                        <span asp-validation-for="Password" class="text-danger"></span>
+
                     </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
                     <div class="row">
                         <div class="col-8">
                             <div class="checkbox icheck">
@@ -70,7 +76,6 @@
                         <!-- /.col -->
                     </div>
                 </form>
-
                 <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
                     <a href="#" class="btn btn-block btn-primary">
