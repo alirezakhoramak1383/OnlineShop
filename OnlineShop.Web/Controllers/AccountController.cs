@@ -5,16 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Context;
 using OnlineShop.Web.Models;
 using System.Security.Claims;
+using OnlineShop.Service.Users;
+using OnlineShop.Model.ViewModel.User;
+using OnlineShop.Domin.Entities.Users;
 
 namespace OnlineShop.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ShopContext _context;
-
-        public AccountController(ShopContext context)
+        private readonly IUserService _userService;
+        public AccountController(ShopContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // صفحه لاگین
@@ -77,6 +81,19 @@ namespace OnlineShop.Web.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return Redirect("/Account/Login");
+        }
+
+        public async Task<IActionResult> SignIn()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SignIn(UserViewModel userViewModel)
+        {
+            await _userService.CreateUserAsync(userViewModel);
+            var user = User.Identity.IsAuthenticated;
+            return Redirect("/Admin");
         }
     }
 }
