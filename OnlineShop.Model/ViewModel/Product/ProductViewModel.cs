@@ -27,8 +27,6 @@ namespace OnlineShop.Model.ViewModel.Product
         [Required(ErrorMessage = "{0} را وارد کنید")]
         public long CategoryId { get; set; }
 
-        public string CategoryName { get; set; }
-
         public bool IsDeleted { get; set; }
 
        

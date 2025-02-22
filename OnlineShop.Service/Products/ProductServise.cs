@@ -32,9 +32,7 @@ namespace OnlineShop.Service.Products
                 Name = s.Name,
                 Description = s.Description,
                 ImagePath = s.ImagePath,
-                Existence = s.Existence,
-                CategoryName = s.Category.Title
-
+                Existence = s.Existence, 
             }).ToListAsync();
         }
 
@@ -48,7 +46,6 @@ namespace OnlineShop.Service.Products
                 ImagePath = s.ImagePath,
                 Existence = s.Existence,
                 CategoryId = s.CategoryId,
-                CategoryName = s.Category.Title
             }).FirstOrDefaultAsync();
         }
 
@@ -77,8 +74,7 @@ namespace OnlineShop.Service.Products
                 Product.Description = productViewModel.Description;
                 Product.ImagePath = productViewModel.ImagePath;
                 Product.Existence = productViewModel.Existence;
-                Product.Category.Title = productViewModel.CategoryName;
-
+                Product.CategoryId = productViewModel.CategoryId;
             }
             await _context.SaveChangesAsync();
         }

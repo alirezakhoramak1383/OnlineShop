@@ -32,6 +32,11 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             if (id == null)
                 return NotFound();
 
+            ViewBag.Categories = await _context.Categories.Select(s => new
+            {
+                s.Id,
+                s.Title
+            }).ToListAsync();
             var Product = await _productService.GetProductByIdAsync(id.Value);
             return View(Product);
         }
@@ -67,7 +72,6 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
                     s.Id,
                     s.Title
                 }).ToListAsync();
-
                 return View(productViewModel);
             }
 
