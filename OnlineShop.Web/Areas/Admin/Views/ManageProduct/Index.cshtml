@@ -72,5 +72,22 @@
         </div>
         <!-- /.row -->
     </section>
+
     <!-- /.content -->
 </div>
+@section Scripts {
+    <script>
+        function ShowDelete()
+        {
+            $.ajax({
+                type:"get",
+                url:"/Admin/ManageProduct/Index",
+                success:function (data){
+                    $("#Modal_body").html("");
+                    $("#Modal_body").html(data);
+                    $("#Modal_Main").modal('toggle');
+                }
+            });
+        }
+    </script>
+}
