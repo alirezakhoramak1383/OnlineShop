@@ -17,8 +17,7 @@
                         <li class="breadcrumb-item"><a href="#">خانه</a></li>
                         <li class="breadcrumb-item active">جداول داده</li>
                     </ol>
-                </div>
-               
+                </div> 
             </div>
         </div>
     </section>
@@ -75,19 +74,3 @@
 
     <!-- /.content -->
 </div>
-@section Scripts {
-    <script>
-        function ShowDelete()
-        {
-            $.ajax({
-                type:"get",
-                url:"/Admin/ManageProduct/Index",
-                success:function (data){
-                    $("#Modal_body").html("");
-                    $("#Modal_body").html(data);
-                    $("#Modal_Main").modal('toggle');
-                }
-            });
-        }
-    </script>
-}
