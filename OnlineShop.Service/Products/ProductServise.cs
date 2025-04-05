@@ -7,7 +7,7 @@ namespace OnlineShop.Service.Products
 {
     public interface IProductService
     {
-        Task<List<ProductViewModel>> GetAllProductsAsync();
+        Task<List<ProductViewModelGET>> GetAllProductsAsync();
         Task<ProductViewModel> GetProductByIdAsync(int id);
         Task CreateProductAsync(ProductViewModel ProductViewModel);
         Task UpdateProductAsync(ProductViewModel ProductViewModel);
@@ -24,15 +24,16 @@ namespace OnlineShop.Service.Products
             _context = context;
         }
 
-        public async Task<List<ProductViewModel>> GetAllProductsAsync()
+        public async Task<List<ProductViewModelGET>> GetAllProductsAsync()
         {
-            return await _context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).Select(s => new ProductViewModel
+            return await _context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).Select(s => new ProductViewModelGET
             {
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
                 ImagePath = s.ImagePath,
-                Existence = s.Existence, 
+                Existence = s.Existence,
+                CategoryName=s.CategoryId.ToString()
             }).ToListAsync();
         }
 

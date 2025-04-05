@@ -78,6 +78,12 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             await _productService.CreateProductAsync(productViewModel);
             return RedirectToAction("Index");
         }
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _productService.DeleteProductAsync(id);
+            return View();
+        }
+
     }
 
 }

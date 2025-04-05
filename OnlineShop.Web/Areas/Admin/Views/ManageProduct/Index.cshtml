@@ -1,5 +1,5 @@
 ﻿@using OnlineShop.Model.ViewModel.Product
-@model List<ProductViewModel>
+@model IEnumerable<ProductViewModelGET>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -49,7 +49,7 @@
                                     <td> <img style="width:66px; height:50px;" src="@product.ImagePath" alt="Product Image" /> </td>
                                     <td> @product.Description </td>
                                     <td> @product.Existence </td>
-                                    <td> @product.CategoryId </td>
+                                    <td> @product.CategoryName</td>
                                     <td>
                                         <span style="display: inline-block; margin-right:3px;">
                                             <button type="button" onclick="ShowDelete()" style="width: 80px;" class="btn btn-block btn-danger custom-btn">حذف</button>
@@ -58,7 +58,7 @@
                                             <a asp-controller="ManageProduct" asp-action="Edit" asp-route-id="@product.Id" type="button" style="width: 80px;" class="btn btn-block btn-warning custom-btn">ویرایش </a>
                                         </span>
                                         <span style="display: inline-block; margin-right: 4px;">
-                                            <button type="button" style="width: 80px;" class="btn btn-block btn-info">جزئیات </button>
+                                            <a type="button" style="width: 80px;" class="btn btn-block btn-info">جزئیات </a>
                                         </span>
                                     </td>
                                 </tr>
@@ -72,6 +72,22 @@
         </div>
         <!-- /.row -->
     </section>
+    @section Scripts {
+        <script>
+            function ShowDelete()
+            {
+                $.ajax({
+                    type:"get",
+                    url:"/Admin/ManageProduct/Index",
+                    success:function (data){
+                        $("#Modal_body").html("");
+                        $("#Modal_body").html(data);
+                        $("#Modal_Main").modal('toggle');
+                    }
+                });
+            }
+        </script>
+    }
 
     <!-- /.content -->
 </div>

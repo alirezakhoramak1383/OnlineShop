@@ -5,7 +5,7 @@ using OnlineShop.Service.Categories;
 using OnlineShop.Service.Products;
 using OnlineShop.Service.Users;
 
-var builder = WebApplication.CreateBuilder(args);
+     var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
