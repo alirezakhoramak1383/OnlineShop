@@ -26,7 +26,10 @@ namespace OnlineShop.Service.Products
 
         public async Task<List<ProductViewModelGET>> GetAllProductsAsync()
         {
-            return await _context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).Select(s => new ProductViewModelGET
+            return await _context.Products
+                .Where(x => x.IsDeleted == false)
+                .Include(x => x.Category)
+                .Select(s => new ProductViewModelGET
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -68,7 +71,11 @@ namespace OnlineShop.Service.Products
 
         public async Task UpdateProductAsync(ProductViewModel productViewModel)
         {
-            var Product = await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == productViewModel.Id);
+            var Product = await _context.Products
+                .Where(x => x.Id == productViewModel.Id)
+                .Include(x => x.Category)
+                .FirstOrDefaultAsync();
+              
             if (Product != null && Product.IsDeleted == false)
             {
                 Product.Name = productViewModel.Name;
@@ -82,13 +89,16 @@ namespace OnlineShop.Service.Products
 
         public async Task DeleteProductAsync(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FirstOrDefaultAsync(q => q.Id == id);
+
             if (product != null && product.IsDeleted == false)
             {
                 product.IsDeleted = true;
             };
             await _context.SaveChangesAsync();
         }
+
+       
     }
 }
 

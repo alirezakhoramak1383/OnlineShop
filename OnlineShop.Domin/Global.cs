@@ -1,0 +1,1 @@
+﻿global using OnlineShop.Domin.Entities.Products;

@@ -25,22 +25,26 @@ namespace OnlineShop.Service.Categories
 
         public async Task<List<CategoryViewModel>> GetAllCategoriesAsync()
         {
-            return await _context.Categories.Where(x=>x.IsDeleted==false).Select(s=>new CategoryViewModel
-            {
-                Id = s.Id,
-                Title = s.Title,
-            })
+            return await _context.Categories
+                .Where(x => x.IsDeleted == false)
+                .Select(s => new CategoryViewModel
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                })
                 .ToListAsync();
         }
 
         public async Task<CategoryViewModel> GetCategoryByIdAsync(int id)
         {
-            return await _context.Categories.Where(x=>x.Id==id).Select(s=>new CategoryViewModel
-            {
-                Id = s.Id,
-                Title = s.Title,
+            return await _context.Categories
+                .Where(x => x.Id == id)
+                .Select(s => new CategoryViewModel
+                {
+                    Id = s.Id,
+                    Title = s.Title,
 
-            }).FirstOrDefaultAsync();
+                }).FirstOrDefaultAsync();
         }
 
         public async Task CreateCategoryAsync(CategoryViewModel categoryViewModel)
@@ -56,8 +60,8 @@ namespace OnlineShop.Service.Categories
 
         public async Task UpdateCategoryAsync(CategoryViewModel categoryViewModel)
         {
-            var Category = await _context.Categories.FirstOrDefaultAsync(p=>p.Id== categoryViewModel.Id);
-            if (Category != null && Category.IsDeleted==false)
+            var Category = await _context.Categories.FirstOrDefaultAsync(p => p.Id == categoryViewModel.Id);
+            if (Category != null && Category.IsDeleted == false)
             {
                 Category.Title = categoryViewModel.Title;
             }
@@ -66,13 +70,13 @@ namespace OnlineShop.Service.Categories
 
         public async Task DeleteCategoryAsync(int id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(x=>x.Id==id);
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
             if (category != null && category.IsDeleted == false)
             {
-                category.IsDeleted = true;     
+                category.IsDeleted = true;
             }
             await _context.SaveChangesAsync();
         }
-        
+
     }
 }
